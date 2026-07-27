@@ -1,0 +1,13 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+pydantic-settings>=2.2
+langgraph>=0.2
+langchain>=0.2
+langchain-openai>=0.1
+neo4j>=5.19
+qdrant-client>=1.9
+langfuse>=2.30
+ragas>=0.1
+mlflow>=2.12
+pytest>=8.0

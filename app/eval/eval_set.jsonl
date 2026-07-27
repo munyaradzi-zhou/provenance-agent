@@ -1,0 +1,2 @@
+{"question": "What datasets fed the model that produced result X?", "ground_truth": "Dataset A and Dataset B, via preprocessing step P."}
+{"question": "Which workflow step introduced the anomaly in run 42?", "ground_truth": "The normalization step, config v3."}

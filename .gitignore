@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+.pytest_cache/
+mlruns/
+.dvc/cache/
+*.egg-info/
+
+# Raw corpus (large; DVC-tracked in Phase 5, not committed to git)
+# Keep data/raw/README.md; ignore the heavy artifacts only.
+data/raw/*.json
+data/raw/*.zip
+data/processed/
