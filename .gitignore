@@ -13,3 +13,6 @@ mlruns/
 data/raw/*.json
 data/raw/*.zip
 data/processed/
+learning.md
+PORTFOLIO_PLAN.md
+plan.md
