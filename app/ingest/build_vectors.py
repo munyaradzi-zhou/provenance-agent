@@ -40,7 +40,7 @@ def _point_id(passage_id: str) -> int:
 def build() -> int:
     s = get_settings()
     passages = _load_passages()
-    client = QdrantClient(url=s.qdrant_url, timeout=60)
+    client = QdrantClient(url=s.qdrant_url, api_key=s.qdrant_api_key or None, timeout=60)
 
     if client.collection_exists(s.qdrant_collection):
         client.delete_collection(s.qdrant_collection)

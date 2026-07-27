@@ -14,8 +14,11 @@ from app.core.config import get_settings
 
 
 def _check_qdrant() -> bool:
+    s = get_settings()
     try:
-        QdrantClient(url=get_settings().qdrant_url, timeout=2).get_collections()
+        QdrantClient(
+            url=s.qdrant_url, api_key=s.qdrant_api_key or None, timeout=2
+        ).get_collections()
         return True
     except Exception:  # noqa: BLE001
         return False

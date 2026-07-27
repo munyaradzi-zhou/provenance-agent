@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,10 +16,14 @@ class Settings(BaseSettings):
     embedding_dim: int = 1536
 
     neo4j_uri: str = "bolt://localhost:7687"
-    neo4j_user: str = "neo4j"
+    # Accept both NEO4J_USER and Aura's native NEO4J_USERNAME.
+    neo4j_user: str = Field(
+        default="neo4j", validation_alias=AliasChoices("neo4j_user", "neo4j_username")
+    )
     neo4j_password: str = "password"
 
     qdrant_url: str = "http://localhost:6333"
+    qdrant_api_key: str = ""  # required for Qdrant Cloud; empty for local
     qdrant_collection: str = "provenance"
 
     # Retrieval knobs
