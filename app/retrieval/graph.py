@@ -73,7 +73,10 @@ class GraphRetriever:
             self._driver = None
 
     def generate_cypher(self, question: str) -> str:
-        msg = get_llm().invoke(_CYPHER_PROMPT.format(question=question))
+        # NB: use replace, not .format — the prompt contains literal {name} braces
+        # from the schema description, which str.format would misparse.
+        prompt = _CYPHER_PROMPT.replace("{question}", question)
+        msg = get_llm().invoke(prompt)
         return _clean(str(msg.content))
 
     def _run_read(self, cypher: str, **params: Any) -> list[dict]:

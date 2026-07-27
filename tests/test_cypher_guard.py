@@ -34,3 +34,13 @@ def test_write_queries_blocked(q):
 def test_clean_strips_code_fences():
     fenced = "```cypher\nMATCH (n) RETURN n\n```"
     assert _clean(fenced) == "MATCH (n) RETURN n"
+
+
+def test_prompt_preserves_literal_braces():
+    """Regression: the prompt has literal {name} braces from the schema hint;
+    substitution must use .replace, not str.format (which would KeyError)."""
+    from app.retrieval.graph import _CYPHER_PROMPT
+
+    prompt = _CYPHER_PROMPT.replace("{question}", "Who directed X?")
+    assert "Who directed X?" in prompt
+    assert "{name}" in prompt  # literal braces survive untouched

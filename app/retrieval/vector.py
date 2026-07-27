@@ -29,7 +29,7 @@ class VectorRetriever:
     @property
     def client(self) -> QdrantClient:
         if self._client is None:
-            self._client = QdrantClient(url=self.settings.qdrant_url)
+            self._client = QdrantClient(url=self.settings.qdrant_url, timeout=60)
         return self._client
 
     def search(self, question: str, k: int | None = None) -> list[dict]:

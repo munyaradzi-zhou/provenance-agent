@@ -40,9 +40,11 @@ def _point_id(passage_id: str) -> int:
 def build() -> int:
     s = get_settings()
     passages = _load_passages()
-    client = QdrantClient(url=s.qdrant_url)
+    client = QdrantClient(url=s.qdrant_url, timeout=60)
 
-    client.recreate_collection(
+    if client.collection_exists(s.qdrant_collection):
+        client.delete_collection(s.qdrant_collection)
+    client.create_collection(
         collection_name=s.qdrant_collection,
         vectors_config=VectorParams(size=s.embedding_dim, distance=Distance.COSINE),
     )
