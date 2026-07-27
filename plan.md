@@ -45,16 +45,17 @@ the exact command/artifact that proves it.
 
 Before writing feature code, make the repo a real, gated project.
 
-- [ ] `git init`, set default branch `main`, first commit of current scaffold.
-- [ ] Create GitHub repo (public), push, add topics: `langgraph`, `rag`, `aws`, `mlops`, `agents`.
-- [ ] Add branch protection on `main`: require CI green + 1 review (even self-review PRs — proves discipline).
-- [ ] Adopt **`uv`** or pin exact versions; split `requirements.txt` → `requirements.txt` (runtime) + `requirements-dev.txt` (pytest, ruff, mypy, presidio, etc.).
-- [ ] Add **`ruff`** (lint + format), **`mypy`** (type-check), **`pre-commit`** hooks (ruff, mypy, end-of-file, trailing-whitespace).
-- [ ] Add `pyproject.toml` with tool config (ruff, mypy, pytest markers).
-- [ ] Add `Makefile` (or `tasks.ps1` for Windows): `make fmt lint type test run up down eval`.
-- [ ] Wire ruff + mypy + pytest into `.github/workflows/ci.yml` as separate jobs.
+- [x] `git init`, set default branch `main`, first commit of current scaffold.
+- [x] Create GitHub repo, push (chose **private** now, flip to public later). Topics: TODO on flip.
+- [~] Branch protection on `main` — **deferred**: GitHub Free blocks branch protection on *private* repos (HTTP 403). Auto-enable on the public flip. CI still runs on every push.
+- [x] Split `requirements.txt` (lean runtime) → + `requirements-dev.txt` (ruff, mypy, pre-commit, pytest, ragas, mlflow, dvc). (Exact pinning / `uv` lockfile = later reproducibility upgrade.)
+- [x] Add **`ruff`** (lint + format) + **`mypy`** (type-check) + **`pre-commit`** hooks. mypy is CI-only (isolated pre-commit env lacks real deps + slow); pre-commit trimmed to native ruff hooks for speed on Windows.
+- [x] Add `pyproject.toml` with tool config (ruff, mypy, pytest markers).
+- [x] Add `tasks.ps1` (Windows) + `Makefile` (Linux/CI): `fmt lint type test check run up down seed eval`.
+- [x] Wire ruff + mypy + pytest into `.github/workflows/ci.yml` as separate jobs (all green).
+- [x] Add `.gitattributes` to normalize line endings to LF (Windows dev + Linux CI).
 
-**Definition of Done:** fresh clone → `make lint type test` all green in CI; `main` is protected.
+**Definition of Done:** fresh clone → `make lint type test` all green in CI. ✅ (branch protection pends public flip.)
 
 ---
 
