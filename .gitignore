@@ -30,3 +30,9 @@ infra/.terraform/
 *.tfstate.*
 infra/terraform.tfvars
 crash.log
+
+# AWS credential exports + more secret/personal files (never track)
+*accessKeys*.csv
+*_accessKeys.csv
+*credentials*.csv
+learningv2.md
