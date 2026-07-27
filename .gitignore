@@ -25,7 +25,7 @@ skills.md/
 
 # Terraform (never commit state or real tfvars — they contain secrets)
 infra/.terraform/
-infra/.terraform.lock.hcl
+# (commit .terraform.lock.hcl — it pins provider versions)
 *.tfstate
 *.tfstate.*
 infra/terraform.tfvars
