@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = s3://provenance-agent-dvc-287530975293/dvc
+    region = eu-central-1
