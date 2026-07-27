@@ -11,10 +11,12 @@ Run: uvicorn app.api.main:app --reload
 from __future__ import annotations
 
 import asyncio
+import logging
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
@@ -25,8 +27,10 @@ from app.api.errors import register_error_handlers
 from app.api.observability import configure_logging, register_request_middleware
 from app.api.readiness import readiness
 from app.core.config import get_settings
+from app.core.tracing import get_callback_handler, tracing_enabled
 
 configure_logging()
+logging.getLogger("provenance.startup").info("langfuse_tracing_enabled=%s", tracing_enabled())
 
 limiter = Limiter(key_func=api_key_identity)
 app = FastAPI(title="ProvenanceAgent", version="1.0.0")
@@ -92,11 +96,20 @@ async def query(request: Request, body: QueryIn, _key: str = Depends(require_api
         raise HTTPException(status_code=422, detail="question must not be empty")
 
     rid = getattr(request.state, "request_id", "-")
+    # Langfuse trace, correlated to this request_id (no-op if not configured).
+    handler = get_callback_handler()
+    config: RunnableConfig = {"metadata": {"request_id": rid}}
+    if handler is not None:
+        config["callbacks"] = [handler]
+        config["run_name"] = "provenance-query"
+
     loop = asyncio.get_event_loop()
     start = loop.time()
     try:
         result = await asyncio.wait_for(
-            loop.run_in_executor(None, lambda: compiled_graph.invoke({"question": body.question})),
+            loop.run_in_executor(
+                None, lambda: compiled_graph.invoke({"question": body.question}, config)
+            ),
             timeout=get_settings().request_timeout_s,
         )
     except TimeoutError as e:

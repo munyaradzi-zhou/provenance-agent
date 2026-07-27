@@ -10,4 +10,4 @@ langchain>=0.2
 langchain-openai>=0.1
 neo4j>=5.19
 qdrant-client>=1.9
-langfuse>=2.30            # request tracing in production
+langfuse>=3.0            # request tracing in production (v3+ langchain integration)
