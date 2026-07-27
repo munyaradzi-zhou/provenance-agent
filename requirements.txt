@@ -2,6 +2,7 @@
 # Kept deliberately lean: no eval/lint/test tooling here (see requirements-dev.txt).
 fastapi>=0.110
 uvicorn[standard]>=0.29
+slowapi>=0.1.9           # per-key rate limiting
 pydantic>=2.6
 pydantic-settings>=2.2
 langgraph>=0.2
