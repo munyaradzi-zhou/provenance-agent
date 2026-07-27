@@ -1,0 +1,22 @@
+# Normalize line endings: store everything as LF in the repo so Windows (CRLF)
+# and the Linux CI runner agree and diffs stay clean. Scripts that MUST be CRLF
+# (none here) or binary assets are pinned explicitly.
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
+*.json  text eol=lf
+*.jsonl text eol=lf
+Makefile text eol=lf
+
+*.ps1   text eol=crlf
+
+# Binaries — never touch
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary

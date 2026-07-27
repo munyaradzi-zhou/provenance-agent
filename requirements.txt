@@ -1,3 +1,5 @@
+# Runtime dependencies — what ships inside the serving Docker image.
+# Kept deliberately lean: no eval/lint/test tooling here (see requirements-dev.txt).
 fastapi>=0.110
 uvicorn[standard]>=0.29
 pydantic>=2.6
@@ -7,7 +9,4 @@ langchain>=0.2
 langchain-openai>=0.1
 neo4j>=5.19
 qdrant-client>=1.9
-langfuse>=2.30
-ragas>=0.1
-mlflow>=2.12
-pytest>=8.0
+langfuse>=2.30            # request tracing in production

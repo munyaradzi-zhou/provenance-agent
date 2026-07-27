@@ -1,4 +1,5 @@
 """FastAPI service wrapping the LangGraph. Run: uvicorn app.api.main:app --reload"""
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 

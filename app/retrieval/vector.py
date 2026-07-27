@@ -1,4 +1,5 @@
 """Vector retrieval over Qdrant. Week 1-2: wire real embedding + search."""
+
 from app.core.config import get_settings
 
 

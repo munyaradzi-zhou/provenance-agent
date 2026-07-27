@@ -1,4 +1,5 @@
 """Smoke test: the graph runs end-to-end and redaction works."""
+
 from app.agents.graph import compiled_graph
 from app.core.redaction import redact
 

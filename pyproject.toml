@@ -1,0 +1,63 @@
+[project]
+name = "provenance-agent"
+version = "0.1.0"
+description = "Production-deployed multi-agent RAG service (LangGraph + Neo4j + Qdrant on AWS)."
+requires-python = ">=3.11"
+
+# ----------------------------------------------------------------------------
+# Ruff — linter + formatter. Target 3.11 to match the Docker/CI runtime,
+# even though the local venv is 3.13; we want to catch anything that would
+# break in production, not just locally.
+# ----------------------------------------------------------------------------
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["app", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",         # pyflakes
+    "I",         # isort (import ordering)
+    "UP",        # pyupgrade (modern syntax)
+    "B",         # flake8-bugbear (likely bugs)
+    "C4",        # flake8-comprehensions
+    "SIM",       # flake8-simplify
+]
+ignore = ["E501"]  # line length handled by the formatter
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B"]   # tests may use patterns bugbear dislikes
+
+# ----------------------------------------------------------------------------
+# Mypy — static type checking. Strict-ish, but pragmatic for a stack with
+# many untyped third-party libs (langchain, ragas, neo4j).
+# ----------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+ignore_missing_imports = true   # third-party libs without stubs
+
+# Heavy transitive deps (numpy et al.) ship .pyi stubs using newer syntax than
+# our 3.11 target; we don't import them directly, so don't follow into them.
+# (Add ragas/mlflow here in Phase 5 when the eval code imports them.)
+[[tool.mypy.overrides]]
+module = ["numpy.*", "pandas.*"]
+follow_imports = "skip"
+follow_imports_for_stubs = true
+
+# ----------------------------------------------------------------------------
+# Pytest — markers so we can separate fast unit tests from integration tests
+# that need docker-compose (Neo4j + Qdrant) running.
+# ----------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: needs docker-compose services (Neo4j + Qdrant) running",
+]
+addopts = "-q"

@@ -1,0 +1,24 @@
+# Runs automatically on `git commit` after `pre-commit install`.
+# Same gates as CI, so problems are caught locally before they ever reach GitHub.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]   # block accidental corpus/model commits
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.7
+    hooks:
+      - id: ruff              # lint
+        args: ["--fix"]
+      - id: ruff-format       # format
+
+# NOTE: mypy is deliberately NOT a pre-commit hook.
+# Its isolated pre-commit env lacks our real deps (langgraph, neo4j, ...), so it
+# both runs ~2.5 min AND gives less accurate results than the real thing.
+# Type-checking is enforced authoritatively in CI (full deps) and available
+# locally via `.\tasks.ps1 type` / `make type`. Pre-commit stays fast (ruff only).

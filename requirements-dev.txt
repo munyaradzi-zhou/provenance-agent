@@ -1,0 +1,14 @@
+# Dev / CI / eval dependencies — NOT shipped in the serving image.
+# Install with:  pip install -r requirements-dev.txt   (pulls in runtime too)
+-r requirements.txt
+
+# Quality gates
+ruff>=0.5              # lint + format (replaces black + isort + flake8)
+mypy>=1.10            # static type checking
+pre-commit>=3.7       # runs the gates automatically before each commit
+pytest>=8.0
+
+# Evaluation & experiment tracking (run in CI / offline, not in the API container)
+ragas>=0.1            # faithfulness / answer-relevance scoring
+mlflow>=2.12          # experiment run tracking
+dvc[s3]>=3.50         # versioning for data + prompts + eval sets

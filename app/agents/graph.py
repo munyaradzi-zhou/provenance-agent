@@ -5,7 +5,11 @@ real logic week by week. Because `trace` has an `operator.add` reducer in
 state.py, each node returns only ITS OWN trace additions and LangGraph merges
 them -- this is what makes the parallel "both" route work correctly.
 """
+
+from typing import Literal
+
 from langgraph.graph import END, StateGraph
+from langgraph.graph.state import CompiledStateGraph
 
 from app.agents.state import AgentState
 from app.core.redaction import redact
@@ -28,7 +32,7 @@ def supervisor_node(state: AgentState) -> AgentState:
     and picks graph / vector / both, with a justification added to the trace.
     """
     q = state["redacted_question"]
-    route = "both" if "?" in q else "vector"
+    route: Literal["graph", "vector", "both"] = "both" if "?" in q else "vector"
     return {"route": route, "trace": [f"supervisor chose route={route}"]}
 
 
@@ -63,7 +67,7 @@ def _route(state: AgentState) -> list[str]:
     return ["graph_agent", "vector_agent"]
 
 
-def build_graph():
+def build_graph() -> CompiledStateGraph:
     g = StateGraph(AgentState)
     g.add_node("redact", redact_node)
     g.add_node("supervisor", supervisor_node)
@@ -73,8 +77,9 @@ def build_graph():
 
     g.set_entry_point("redact")
     g.add_edge("redact", "supervisor")
-    g.add_conditional_edges("supervisor", _route,
-                            {"graph_agent": "graph_agent", "vector_agent": "vector_agent"})
+    g.add_conditional_edges(
+        "supervisor", _route, {"graph_agent": "graph_agent", "vector_agent": "vector_agent"}
+    )
     g.add_edge("graph_agent", "synthesis")
     g.add_edge("vector_agent", "synthesis")
     g.add_edge("synthesis", END)

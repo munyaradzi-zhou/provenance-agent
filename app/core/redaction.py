@@ -2,6 +2,7 @@
 
 Week 6: swap the regex stub for Microsoft Presidio for real coverage.
 """
+
 import re
 
 _PATTERNS = {

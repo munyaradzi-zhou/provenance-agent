@@ -1,4 +1,5 @@
 """Graph retrieval over Neo4j. Week 1-2: wire real Cypher generation."""
+
 from app.core.config import get_settings
 
 
