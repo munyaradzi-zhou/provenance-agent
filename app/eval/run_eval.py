@@ -98,9 +98,45 @@ def _score(rows: list[dict], runner: Callable[[str], tuple[str, list[str]]]) -> 
         embeddings=emb,
         show_progress=False,
     )
-    df = result.to_pandas()  # type: ignore[union-attr]
+    df = result.to_pandas()
     metric_cols = [c for c in df.columns if df[c].dtype.kind == "f"]
     return {c: round(float(df[c].mean()), 3) for c in metric_cols}
+
+
+def _log_mlflow(report: dict, threshold: float) -> None:
+    """Log the eval as an MLflow run (params + metrics + report artifact).
+
+    Best-effort: a tracking hiccup must never fail the faithfulness gate. Uses the
+    default local file store (./mlruns), viewable with `mlflow ui`.
+    """
+    try:
+        import mlflow
+
+        from app.core.config import get_settings
+
+        s = get_settings()
+        mlflow.set_experiment("provenance-eval")
+        with mlflow.start_run():
+            mlflow.log_params(
+                {
+                    "llm_model": s.llm_model,
+                    "embedding_model": s.embedding_model,
+                    "top_k": s.top_k,
+                    "max_retries": s.max_retries,
+                    "rerank_enabled": s.rerank_enabled,
+                    "n_examples": report["n"],
+                    "threshold": threshold,
+                }
+            )
+            for k, v in report["agent"].items():
+                mlflow.log_metric(f"agent_{k}", v)
+            for k, v in report.get("baseline", {}).items():
+                mlflow.log_metric(f"baseline_{k}", v)
+            if REPORT.exists():
+                mlflow.log_artifact(str(REPORT))
+        print("Logged run to MLflow (mlruns/) — view with `mlflow ui`")
+    except Exception as e:  # noqa: BLE001
+        print(f"MLflow logging skipped: {type(e).__name__}: {e}")
 
 
 def main() -> None:
@@ -128,6 +164,8 @@ def main() -> None:
 
     REPORT.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"\nWrote {REPORT}")
+
+    _log_mlflow(report, args.threshold)
 
     faith = next((v for k, v in agent_means.items() if "faith" in k.lower()), None)
     if faith is not None and faith < args.threshold:

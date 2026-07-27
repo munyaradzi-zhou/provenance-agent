@@ -47,7 +47,7 @@ ignore_missing_imports = true   # third-party libs without stubs
 # our 3.11 target; we don't import them directly, so don't follow into them.
 # (Add ragas/mlflow here in Phase 5 when the eval code imports them.)
 [[tool.mypy.overrides]]
-module = ["numpy.*", "pandas.*"]
+module = ["numpy.*", "pandas.*", "mlflow.*", "ragas.*"]
 follow_imports = "skip"
 follow_imports_for_stubs = true
 

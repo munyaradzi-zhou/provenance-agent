@@ -20,7 +20,7 @@ CANNED = {
 
 
 class FakeGraph:
-    def invoke(self, _state):
+    def invoke(self, _state, _config=None):  # _config: LangChain RunnableConfig
         return CANNED
 
 
