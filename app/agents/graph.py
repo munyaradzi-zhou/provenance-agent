@@ -1,23 +1,42 @@
-"""The multi-agent LangGraph: supervisor routes, workers retrieve, synthesis answers.
+"""The multi-agent LangGraph: supervisor routes, workers retrieve, synthesis
+answers, grader checks, and a bounded repair loop retries on ungrounded answers.
 
-Runs today with stubs so you can see the full flow, then replace each node with
-real logic week by week. Because `trace` has an `operator.add` reducer in
-state.py, each node returns only ITS OWN trace additions and LangGraph merges
-them -- this is what makes the parallel "both" route work correctly.
+    redact -> supervisor -> (graph_agent | vector_agent | both) -> synthesis
+           -> grader -> {repair -> supervisor ...  |  END}
+
+Because `trace` has an `operator.add` reducer, each node returns only ITS OWN
+trace additions and LangGraph merges them -- this is what makes the parallel
+"both" route work. Prompt filling uses str.replace (not .format) so retrieved
+context containing literal { } braces can never break templating.
 """
 
+import re
 from typing import Literal
 
 from langgraph.graph import END, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 
+from app.agents.prompts import load_prompt
+from app.agents.schemas import GroundingVerdict, RouteDecision
 from app.agents.state import AgentState
+from app.core.config import get_settings
+from app.core.llm import get_llm
 from app.core.redaction import redact
 from app.retrieval.graph import GraphRetriever
 from app.retrieval.vector import VectorRetriever
 
 _graph_retriever = GraphRetriever()
 _vector_retriever = VectorRetriever()
+
+_CITATION = re.compile(r"\[([^\]]+)\]")
+
+
+def _fill(template: str, **kw: str) -> str:
+    """Substitute {key} placeholders WITHOUT str.format, so literal braces in
+    the injected values (e.g. Cypher-ish context) are left untouched."""
+    for k, v in kw.items():
+        template = template.replace("{" + k + "}", v)
+    return template
 
 
 def redact_node(state: AgentState) -> AgentState:
@@ -26,19 +45,39 @@ def redact_node(state: AgentState) -> AgentState:
 
 
 def supervisor_node(state: AgentState) -> AgentState:
-    """Decide the retrieval route.
+    """LLM router: pick graph / vector / both with a justification.
 
-    TODO(week2): replace heuristic with an LLM router that reads the question
-    and picks graph / vector / both, with a justification added to the trace.
+    On a repair retry (retries > 0) we broaden to "both" to gather more context.
+    On any LLM failure we fall back to a deterministic heuristic so routing never
+    hard-crashes the request.
     """
+    if state.get("retries", 0) > 0:
+        return {
+            "route": "both",
+            "route_reason": "repair retry: broadening to both stores",
+            "trace": ["supervisor: repair -> route=both"],
+        }
+
     q = state["redacted_question"]
-    route: Literal["graph", "vector", "both"] = "both" if "?" in q else "vector"
-    return {"route": route, "trace": [f"supervisor chose route={route}"]}
+    try:
+        llm = get_llm().with_structured_output(RouteDecision)
+        decision: RouteDecision = llm.invoke(_fill(load_prompt("router"), question=q))  # type: ignore[assignment]
+        return {
+            "route": decision.route,
+            "route_reason": decision.reason,
+            "trace": [f"supervisor: route={decision.route} ({decision.reason})"],
+        }
+    except Exception as e:  # noqa: BLE001
+        route: Literal["graph", "vector", "both"] = "both" if "?" in q else "vector"
+        return {
+            "route": route,
+            "route_reason": f"fallback heuristic (router LLM failed: {type(e).__name__})",
+            "trace": [f"supervisor fallback: route={route}"],
+        }
 
 
 def graph_agent_node(state: AgentState) -> AgentState:
-    """Retrieve from Neo4j; degrade to empty context on failure (recorded in trace)
-    so one store being down never crashes the whole request."""
+    """Retrieve from Neo4j; degrade to empty context on failure (recorded in trace)."""
     try:
         ctx = _graph_retriever.retrieve(state["redacted_question"])
         return {"graph_context": ctx, "trace": ["graph agent ran"]}
@@ -56,14 +95,64 @@ def vector_agent_node(state: AgentState) -> AgentState:
 
 
 def synthesis_node(state: AgentState) -> AgentState:
-    """Combine retrieved context into a final answer.
+    """LLM answer over retrieved context only, with inline [title] citations."""
+    q = state["redacted_question"]
+    gc = state.get("graph_context") or "(none)"
+    vc = state.get("vector_context") or "(none)"
+    try:
+        prompt = _fill(load_prompt("synthesis"), question=q, graph_context=gc, vector_context=vc)
+        answer = str(get_llm().invoke(prompt).content).strip()
+    except Exception as e:  # noqa: BLE001
+        return {"answer": "", "citations": [], "trace": [f"synthesis error: {type(e).__name__}"]}
+    citations = sorted(set(_CITATION.findall(answer)))
+    return {
+        "answer": answer,
+        "citations": citations,
+        "faithfulness": None,  # real RAGAS score wired in Phase 5
+        "trace": [f"synthesis complete ({len(citations)} citations)"],
+    }
 
-    TODO(week2): real LLM synthesis over graph_context + vector_context.
-    TODO(week5): compute a real RAGAS faithfulness score here.
-    """
-    parts = [state.get("graph_context", ""), state.get("vector_context", "")]
-    answer = "SYNTHESISED ANSWER from: " + " | ".join(p for p in parts if p)
-    return {"answer": answer, "faithfulness": None, "trace": ["synthesis complete"]}
+
+def grader_node(state: AgentState) -> AgentState:
+    """LLM-as-judge: is the answer fully supported by the retrieved context?"""
+    answer = state.get("answer", "")
+    if not answer:
+        return {
+            "grounded": False,
+            "grader_reason": "empty answer",
+            "trace": ["grader: ungrounded (empty)"],
+        }
+
+    context = (
+        (state.get("graph_context") or "") + "\n" + (state.get("vector_context") or "")
+    ).strip()
+    try:
+        llm = get_llm().with_structured_output(GroundingVerdict)
+        prompt = _fill(
+            load_prompt("grader"),
+            question=state["redacted_question"],
+            context=context or "(none)",
+            answer=answer,
+        )
+        verdict: GroundingVerdict = llm.invoke(prompt)  # type: ignore[assignment]
+        return {
+            "grounded": verdict.grounded,
+            "grader_reason": verdict.reason,
+            "trace": [f"grader: grounded={verdict.grounded} ({verdict.reason})"],
+        }
+    except Exception as e:  # noqa: BLE001
+        # Fail-open: a grader failure shouldn't block the answer or spin the loop.
+        return {
+            "grounded": True,
+            "grader_reason": f"grader error, passing ({type(e).__name__})",
+            "trace": ["grader error: passing"],
+        }
+
+
+def repair_node(state: AgentState) -> AgentState:
+    """Increment the retry counter; supervisor will broaden retrieval next pass."""
+    retries = state.get("retries", 0) + 1
+    return {"retries": retries, "trace": [f"repair: retry {retries}"]}
 
 
 def _route(state: AgentState) -> list[str]:
@@ -76,6 +165,15 @@ def _route(state: AgentState) -> list[str]:
     return ["graph_agent", "vector_agent"]
 
 
+def _after_grader(state: AgentState) -> str:
+    """Repair if ungrounded and retries remain; otherwise finish (gracefully)."""
+    if state.get("grounded"):
+        return "end"
+    if state.get("retries", 0) >= get_settings().max_retries:
+        return "end"
+    return "repair"
+
+
 def build_graph() -> CompiledStateGraph:
     g = StateGraph(AgentState)
     g.add_node("redact", redact_node)
@@ -83,6 +181,8 @@ def build_graph() -> CompiledStateGraph:
     g.add_node("graph_agent", graph_agent_node)
     g.add_node("vector_agent", vector_agent_node)
     g.add_node("synthesis", synthesis_node)
+    g.add_node("grader", grader_node)
+    g.add_node("repair", repair_node)
 
     g.set_entry_point("redact")
     g.add_edge("redact", "supervisor")
@@ -91,7 +191,9 @@ def build_graph() -> CompiledStateGraph:
     )
     g.add_edge("graph_agent", "synthesis")
     g.add_edge("vector_agent", "synthesis")
-    g.add_edge("synthesis", END)
+    g.add_edge("synthesis", "grader")
+    g.add_conditional_edges("grader", _after_grader, {"repair": "repair", "end": END})
+    g.add_edge("repair", "supervisor")
     return g.compile()
 
 

@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     top_k: int = 5
     rerank_enabled: bool = False
 
+    # Agent orchestration
+    max_retries: int = 1  # repair-loop cap: how many times to re-retrieve if ungrounded
+
     langfuse_public_key: str = ""
     langfuse_secret_key: str = ""
     langfuse_host: str = "https://cloud.langfuse.com"

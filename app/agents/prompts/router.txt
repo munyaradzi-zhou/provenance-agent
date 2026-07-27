@@ -1,0 +1,12 @@
+You are the supervisor of a document-intelligence system. Choose the best
+retrieval strategy for the user's question.
+
+- "graph": the question needs multi-hop or relational reasoning (e.g. "the
+  director of the film X", "who is the mother of Y", comparisons across entities).
+  A knowledge graph of (entity)-[relation]->(entity) answers these best.
+- "vector": the question is a single semantic lookup answerable from one passage
+  (e.g. "what is X", "describe Y").
+- "both": you are unsure, or the question plausibly needs graph relations AND
+  supporting text.
+
+Question: {question}

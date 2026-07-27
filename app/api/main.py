@@ -14,8 +14,11 @@ class QueryIn(BaseModel):
 
 class QueryOut(BaseModel):
     answer: str
-    trace: list[str]
-    faithfulness: float | None = None
+    route: str | None = None  # which retrieval strategy the supervisor chose
+    grounded: bool | None = None  # grader verdict
+    citations: list[str] = []  # source titles cited in the answer
+    trace: list[str] = []  # full reasoning trace (route choice, grader verdict, ...)
+    faithfulness: float | None = None  # RAGAS self-score (Phase 5)
 
 
 @app.get("/health")
@@ -28,6 +31,9 @@ def query(body: QueryIn) -> QueryOut:
     result = compiled_graph.invoke({"question": body.question})
     return QueryOut(
         answer=result.get("answer", ""),
+        route=result.get("route"),
+        grounded=result.get("grounded"),
+        citations=result.get("citations", []),
         trace=result.get("trace", []),
         faithfulness=result.get("faithfulness"),
     )

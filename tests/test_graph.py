@@ -1,14 +1,29 @@
-"""Smoke test: the graph runs end-to-end and redaction works."""
+"""Smoke test: the full graph runs end-to-end (LLM mocked) and redaction works."""
 
-from app.agents.graph import compiled_graph
+import app.agents.graph as G
+from app.agents.schemas import GroundingVerdict, RouteDecision
 from app.core.redaction import redact
 
+from tests.conftest import make_llm
 
-def test_graph_runs():
-    result = compiled_graph.invoke({"question": "What produced result X?"})
+
+def test_graph_runs(monkeypatch):
+    # Mock the LLM so the whole graph runs offline. Retrievers fail with no
+    # services and degrade to empty context, exercising the resilience paths.
+    monkeypatch.setattr(
+        G,
+        "get_llm",
+        lambda: make_llm(
+            route=RouteDecision(route="vector", reason="semantic lookup"),
+            answer="Albert Pyun directed it [Nemesis 2].",
+            grounded=GroundingVerdict(grounded=True, reason="supported"),
+        ),
+    )
+    result = G.compiled_graph.invoke({"question": "What produced result X?"})
     assert result["answer"]
-    assert isinstance(result["trace"], list)
-    assert len(result["trace"]) >= 3
+    assert result["route"] == "vector"
+    assert result["grounded"] is True
+    assert isinstance(result["trace"], list) and len(result["trace"]) >= 4
 
 
 def test_redaction():

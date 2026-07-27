@@ -1,0 +1,14 @@
+You are a strict grader. Decide whether the ANSWER is fully supported by the
+CONTEXT — i.e. every factual claim in the answer can be traced to the context.
+
+Mark grounded=false if the answer contains any claim not present in the context,
+or if the answer is the refusal "I cannot answer this from the retrieved context."
+Mark grounded=true only if the answer is both non-empty and fully supported.
+
+Question: {question}
+
+CONTEXT:
+{context}
+
+ANSWER:
+{answer}

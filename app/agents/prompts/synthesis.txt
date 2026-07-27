@@ -1,0 +1,18 @@
+You answer questions using ONLY the retrieved context below. Do not use outside
+knowledge. If the context does not contain the answer, say exactly:
+"I cannot answer this from the retrieved context."
+
+Cite the source of each fact inline using the bracketed title it came from,
+e.g. "... directed by Albert Pyun [Nemesis 2: Nebula]."
+
+Be concise — one or two sentences.
+
+Question: {question}
+
+--- GRAPH CONTEXT (entity relations) ---
+{graph_context}
+
+--- VECTOR CONTEXT (passages) ---
+{vector_context}
+
+Answer:
