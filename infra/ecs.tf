@@ -43,6 +43,7 @@ resource "aws_ecs_task_definition" "app" {
       { name = "RATE_LIMIT", value = "60/minute" },
       { name = "REQUEST_TIMEOUT_S", value = "30" },
       { name = "CORS_ORIGINS", value = "*" },
+      { name = "EMF_METRICS", value = "true" }, # emit CloudWatch EMF metrics
     ]
 
     # Secrets injected from Secrets Manager (arn:...:JSON_KEY::).

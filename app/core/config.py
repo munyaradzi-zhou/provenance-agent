@@ -33,6 +33,9 @@ class Settings(BaseSettings):
     # Agent orchestration
     max_retries: int = 1  # repair-loop cap: how many times to re-retrieve if ungrounded
 
+    # Observability
+    emf_metrics: bool = False  # emit CloudWatch EMF metric logs (on in ECS, off locally)
+
     # API layer
     api_keys: str = ""  # comma-separated valid keys; empty = auth disabled (dev only)
     rate_limit: str = "60/minute"  # per-key limit (slowapi syntax)

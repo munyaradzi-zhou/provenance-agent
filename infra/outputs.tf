@@ -20,3 +20,8 @@ output "ecs_cluster" {
 output "ecs_service" {
   value = aws_ecs_service.app.name
 }
+
+output "dashboard_url" {
+  description = "CloudWatch dashboard."
+  value       = "https://${var.region}.console.aws.amazon.com/cloudwatch/home?region=${var.region}#dashboards/dashboard/${aws_cloudwatch_dashboard.app.dashboard_name}"
+}

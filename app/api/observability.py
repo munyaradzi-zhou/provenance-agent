@@ -15,6 +15,39 @@ from collections.abc import Awaitable, Callable
 
 from fastapi import FastAPI, Request, Response
 
+from app.core.config import get_settings
+
+METRICS_NAMESPACE = "ProvenanceAgent"
+
+
+def emit_metric(latency_ms: float, is_error: bool) -> None:
+    """Emit one CloudWatch EMF metric log. CloudWatch auto-extracts Latency,
+    Requests, and Errors from the `_aws` block — no PutMetricData call, no extra
+    IAM. No-op unless emf_metrics is on (so local logs stay clean)."""
+    if not get_settings().emf_metrics:
+        return
+    doc = {
+        "_aws": {
+            "Timestamp": int(time.time() * 1000),
+            "CloudWatchMetrics": [
+                {
+                    "Namespace": METRICS_NAMESPACE,
+                    "Dimensions": [["service"]],
+                    "Metrics": [
+                        {"Name": "Latency", "Unit": "Milliseconds"},
+                        {"Name": "Requests", "Unit": "Count"},
+                        {"Name": "Errors", "Unit": "Count"},
+                    ],
+                }
+            ],
+        },
+        "service": "api",
+        "Latency": latency_ms,
+        "Requests": 1,
+        "Errors": 1 if is_error else 0,
+    }
+    print(json.dumps(doc))  # noqa: T201 - EMF must go to stdout for the awslogs driver
+
 
 class JsonFormatter(logging.Formatter):
     """Render log records as single-line JSON."""
@@ -66,4 +99,5 @@ def register_request_middleware(app: FastAPI) -> None:
                 "latency_ms": latency_ms,
             },
         )
+        emit_metric(latency_ms, is_error=response.status_code >= 500)
         return response
