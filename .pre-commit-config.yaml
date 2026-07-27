@@ -1,24 +1,24 @@
 # Runs automatically on `git commit` after `pre-commit install`.
-# Same gates as CI, so problems are caught locally before they ever reach GitHub.
+#
+# Design note (Windows dev machine): we keep ONLY the ruff hooks here.
+# ruff ships as a native binary, so it runs in ~3s. The generic
+# `pre-commit-hooks` (trailing-whitespace, end-of-file-fixer, check-yaml,
+# check-added-large-files) each spawn a fresh *isolated Python interpreter*,
+# which Windows Defender re-scans on every spawn -> ~20s each, ~80s+ per commit.
+# Their value is otherwise covered:
+#   - ruff-format fixes trailing whitespace + final newlines on .py files
+#   - .gitattributes normalizes line endings (LF) across the repo
+#   - .gitignore + review keep the large corpus out of git
+# mypy is intentionally CI-only (see note below) so commits stay fast.
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
-    hooks:
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-      - id: check-yaml
-      - id: check-added-large-files
-        args: ["--maxkb=1024"]   # block accidental corpus/model commits
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.5.7
     hooks:
-      - id: ruff              # lint
+      - id: ruff              # lint (auto-fixes what it safely can)
         args: ["--fix"]
       - id: ruff-format       # format
 
-# NOTE: mypy is deliberately NOT a pre-commit hook.
-# Its isolated pre-commit env lacks our real deps (langgraph, neo4j, ...), so it
-# both runs ~2.5 min AND gives less accurate results than the real thing.
+# mypy is NOT a pre-commit hook: its isolated env lacks our real deps
+# (langgraph, neo4j, ...), making it both slow (~2.5 min) and less accurate.
 # Type-checking is enforced authoritatively in CI (full deps) and available
-# locally via `.\tasks.ps1 type` / `make type`. Pre-commit stays fast (ruff only).
+# locally via `.\tasks.ps1 type` / `make type`.
