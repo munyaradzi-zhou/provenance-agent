@@ -37,13 +37,22 @@ def supervisor_node(state: AgentState) -> AgentState:
 
 
 def graph_agent_node(state: AgentState) -> AgentState:
-    ctx = _graph_retriever.retrieve(state["redacted_question"])
-    return {"graph_context": ctx, "trace": ["graph agent ran"]}
+    """Retrieve from Neo4j; degrade to empty context on failure (recorded in trace)
+    so one store being down never crashes the whole request."""
+    try:
+        ctx = _graph_retriever.retrieve(state["redacted_question"])
+        return {"graph_context": ctx, "trace": ["graph agent ran"]}
+    except Exception as e:  # noqa: BLE001
+        return {"graph_context": "", "trace": [f"graph agent error: {type(e).__name__}"]}
 
 
 def vector_agent_node(state: AgentState) -> AgentState:
-    ctx = _vector_retriever.retrieve(state["redacted_question"])
-    return {"vector_context": ctx, "trace": ["vector agent ran"]}
+    """Retrieve from Qdrant; degrade to empty context on failure (recorded in trace)."""
+    try:
+        ctx = _vector_retriever.retrieve(state["redacted_question"])
+        return {"vector_context": ctx, "trace": ["vector agent ran"]}
+    except Exception as e:  # noqa: BLE001
+        return {"vector_context": "", "trace": [f"vector agent error: {type(e).__name__}"]}
 
 
 def synthesis_node(state: AgentState) -> AgentState:
