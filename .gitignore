@@ -22,3 +22,11 @@ cluster.md
 provenance-instance.md
 skills.md/
 *_api_key.txt
+
+# Terraform (never commit state or real tfvars — they contain secrets)
+infra/.terraform/
+infra/.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+infra/terraform.tfvars
+crash.log
