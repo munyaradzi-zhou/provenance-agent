@@ -37,12 +37,32 @@ jobs:
       - name: Unit tests
         run: pytest -q -m "not integration"
 
-  # Enabled in Phase 5 — gates merges on eval quality (fails if faithfulness drops).
-  # eval:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v5
-  #       with: { python-version: "3.11" }
-  #     - run: pip install -r requirements-dev.txt
-  #     - run: python -m app.eval.run_eval
+  # RAGAS quality gate. Runs the real agent over the eval set and fails if
+  # faithfulness drops below threshold. Gated to PRs + manual runs (not every
+  # push) because it makes real LLM calls and hits the managed data stores.
+  # Requires repo secrets: OPENAI_API_KEY, NEO4J_URI, NEO4J_USERNAME,
+  # NEO4J_PASSWORD, QDRANT_URL, QDRANT_API_KEY.
+  eval:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      NEO4J_URI: ${{ secrets.NEO4J_URI }}
+      NEO4J_USERNAME: ${{ secrets.NEO4J_USERNAME }}
+      NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+      QDRANT_URL: ${{ secrets.QDRANT_URL }}
+      QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-dev.txt
+      - name: RAGAS eval (faithfulness gate + flat-vector baseline)
+        run: python -m app.eval.run_eval --baseline
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: app/eval/report.json

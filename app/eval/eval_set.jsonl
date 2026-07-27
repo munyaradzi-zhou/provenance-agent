@@ -1,2 +1,12 @@
-{"question": "What datasets fed the model that produced result X?", "ground_truth": "Dataset A and Dataset B, via preprocessing step P."}
-{"question": "Which workflow step introduced the anomaly in run 42?", "ground_truth": "The normalization step, config v3."}
+{"question": "Where did Peter Baden-Powell, 2Nd Baron Baden-Powell's father die?", "answer": "Nyeri", "type": "compositional"}
+{"question": "Where does Louise Linton's husband work at?", "answer": "Goldman", "type": "compositional"}
+{"question": "Which country the director of film První Parta (Film) is from?", "answer": "Czech", "type": "compositional"}
+{"question": "Did the movies Ride A Crooked Trail and The Glassworker, originate from the same country?", "answer": "no", "type": "comparison"}
+{"question": "Which film came out first, Burnt By The Sun or End Of Watch?", "answer": "Burnt By The Sun", "type": "comparison"}
+{"question": "Which film was released first, Lettre Ouverte or A Woman'S War?", "answer": "Lettre Ouverte", "type": "comparison"}
+{"question": "Which film whose director is younger, Mr. Fix-It or People Not As Bad As They Seem?", "answer": "People Not As Bad As They Seem", "type": "bridge_comparison"}
+{"question": "Which film has the director born later, Paasa Paravaigal or And The Heavens Above Us?", "answer": "Paasa Paravaigal", "type": "bridge_comparison"}
+{"question": "Which film whose director was born first, Crimen A Las Tres or The Working Class Goes To Heaven?", "answer": "Crimen A Las Tres", "type": "bridge_comparison"}
+{"question": "Who is the mother of Henry Hanbury-Tracy?", "answer": "Henrietta Susanna Tracy", "type": "inference"}
+{"question": "Who is the paternal grandfather of Ibrahim Ibn Al-Walid?", "answer": "Abd al-Malik ibn Marwan", "type": "inference"}
+{"question": "Who is Stanisław Antoni Potocki's child-in-law?", "answer": "Róża Maria Wodzicka", "type": "inference"}

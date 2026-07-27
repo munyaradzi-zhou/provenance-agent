@@ -36,3 +36,4 @@ crash.log
 *_accessKeys.csv
 *credentials*.csv
 learningv2.md
+app/eval/report.json
