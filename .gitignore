@@ -16,3 +16,9 @@ data/processed/
 learning.md
 PORTFOLIO_PLAN.md
 plan.md
+# Accidentally-committed credential/reference files (never track)
+Provenance_agent_api_key.txt
+cluster.md
+provenance-instance.md
+skills.md/
+*_api_key.txt
