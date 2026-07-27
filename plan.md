@@ -96,32 +96,34 @@ Nothing is retrievable until a corpus exists. This is the biggest missing piece.
 ### 2.1 Corpus — 2WikiMultihopQA (chosen ✅, downloaded)
 - [x] **Selected `2WikiMultihopQA`** (COLING 2020, Apache-2.0) — the rare benchmark shipping each example with BOTH `evidences` (subject-relation-object triples → Neo4j) AND `context` (Wikipedia paragraphs → Qdrant), plus `answer` + `supporting_facts` (→ RAGAS + reasoning trace). Ideal for proving graph-vs-vector routing.
 - [x] Downloaded to `data/raw/` (fixed april7 release): `dev.json` (12,576 ex), `train.json`, `test.json`, `id_aliases.json`. Gitignored; documented in `data/raw/README.md`.
-- [ ] **Subset** `dev.json` → a demo corpus (~500–1000 examples, balanced across the 4 `type`s: compositional/comparison/bridge_comparison/inference) written to `data/processed/`.
-- [ ] Define the **graph schema** in `docs/schema.md` (nodes = entities from triples/`entity_ids`; edges = relations; passages linked to entities).
+- [x] **Subset** `dev.json` → balanced demo corpus (`app/ingest/subset.py`, 125/type = 500 ex → 3463 passages, 1259 triples, 500 eval Qs in `data/processed/`, gitignored, deterministic/seeded).
+- [x] Define the **graph schema** in `docs/schema.md` (`:Entity {name}` nodes, `:REL {name}` edges, Qdrant collection spec, diagrams).
 
 ### 2.2 Ingestion pipeline (`app/ingest/`)
-- [ ] `app/ingest/build_graph.py`: parse corpus → entities/relations → load into Neo4j (idempotent, MERGE-based).
-- [ ] `app/ingest/build_vectors.py`: chunk docs → embed → upsert into Qdrant collection (create collection with correct vector size + distance).
-- [ ] One entry point `python -m app.ingest` (or `make seed`) that populates both stores against the docker-compose services.
-- [ ] Ship a tiny seed subset used by CI/tests so integration tests don't need the full corpus.
+- [x] `app/ingest/build_graph.py`: MERGE-based idempotent load of triples into Neo4j (constraint + batched UNWIND).
+- [x] `app/ingest/build_vectors.py`: batched embed → upsert passages into Qdrant (collection created with 1536-dim cosine).
+- [x] Entry point `python -m app.ingest` (orchestrator; `--graph`/`--vectors`/`--per-type`).
+- [~] Tiny seed subset for CI/tests — deferred (integration tests auto-skip without services; revisit when CI gets service containers).
 
 ### 2.3 Vector retriever (`app/retrieval/vector.py`)
-- [ ] Init Qdrant client + embedding model from `Settings`.
-- [ ] `retrieve()`: embed question → top-k search → return formatted context chunks **with source IDs**.
-- [ ] Add optional **re-ranking** (cross-encoder or LLM re-rank) behind a flag — postings ask for "retrieval strategy, re-ranking".
+- [x] Lazy Qdrant client + shared embedder from `Settings`.
+- [x] `search()`/`retrieve()`: embed → top-k ANN → formatted context with titles/scores.
+- [x] Optional **hybrid re-ranking** behind `rerank_enabled` (over-fetch + lexical-overlap boost).
 
 ### 2.4 Graph retriever (`app/retrieval/graph.py`)
-- [ ] Init Neo4j driver from `Settings`; manage connection lifecycle (close on shutdown).
-- [ ] **Text-to-Cypher**: LLM generates a Cypher query constrained to the schema; execute; format rows into context. Guard against write queries (read-only session).
-- [ ] Handle empty results gracefully (feeds the Phase 1 repair edge).
+- [x] Lazy Neo4j driver from `Settings` + `close()` lifecycle.
+- [x] **Text-to-Cypher**: LLM generates Cypher; `is_read_only` injection guard; read session.
+- [x] Graceful empty/error handling → deterministic entity-neighbourhood fallback → "" (feeds Phase 1 repair).
 
 ### 2.5 Config & tests
-- [ ] Add `embedding_model`, `top_k`, `rerank_enabled` to `Settings` + `.env.example`.
-- [ ] Integration tests (marked `@pytest.mark.integration`) against docker-compose Neo4j+Qdrant with the seed corpus.
-- [ ] Add a **flat-vector baseline** path (no graph, no routing) for the eval comparison in the README results table.
+- [x] Added `embedding_model`, `embedding_dim`, `top_k`, `rerank_enabled` to `Settings` + `.env.example`.
+- [x] Unit tests: Cypher read-only guard (injection cases), subset balance/dedup. Integration tests marked + auto-skip.
+- [~] **Flat-vector baseline** path — deferred to Phase 5 (where it's needed for the eval comparison table).
+- [x] Agent nodes degrade gracefully on retriever failure (trace-logged).
 
-**Definition of Done:** `make up && make seed` then a real multi-hop question
-returns an answer grounded in actual Neo4j + Qdrant data; integration tests green.
+**Definition of Done:** offline code + gates green ✅. **Live run pending Docker Desktop:**
+`docker compose up` → `python -m app.ingest` → a real multi-hop question returns
+grounded context; `pytest -m integration` green. ⏳
 
 ---
 
