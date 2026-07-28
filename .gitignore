@@ -44,3 +44,6 @@ github.md
 # Raw screenshot dumps — only the clean-named heroes are tracked
 docs/screenshots/Screenshot*.png
 docs/screenshots/demo-optimize.gif
+
+# Personal theory course (local study doc)
+learning_theory.md
