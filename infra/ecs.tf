@@ -15,6 +15,7 @@ locals {
   secret_keys = [
     "OPENAI_API_KEY", "NEO4J_URI", "NEO4J_USER", "NEO4J_PASSWORD",
     "QDRANT_URL", "QDRANT_API_KEY", "API_KEYS",
+    "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY",
   ]
 }
 

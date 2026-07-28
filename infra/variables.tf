@@ -63,3 +63,14 @@ variable "api_keys" {
   type        = string
   sensitive   = true
 }
+
+variable "langfuse_public_key" {
+  type    = string
+  default = ""
+}
+
+variable "langfuse_secret_key" {
+  type      = string
+  sensitive = true
+  default   = ""
+}

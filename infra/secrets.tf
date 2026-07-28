@@ -14,8 +14,10 @@ resource "aws_secretsmanager_secret_version" "app" {
     NEO4J_URI      = var.neo4j_uri
     NEO4J_USER     = var.neo4j_user
     NEO4J_PASSWORD = var.neo4j_password
-    QDRANT_URL     = var.qdrant_url
-    QDRANT_API_KEY = var.qdrant_api_key
-    API_KEYS       = var.api_keys
+    QDRANT_URL          = var.qdrant_url
+    QDRANT_API_KEY      = var.qdrant_api_key
+    API_KEYS            = var.api_keys
+    LANGFUSE_PUBLIC_KEY = var.langfuse_public_key
+    LANGFUSE_SECRET_KEY = var.langfuse_secret_key
   })
 }
