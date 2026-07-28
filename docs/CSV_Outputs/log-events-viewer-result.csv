@@ -1,0 +1,201 @@
+timestamp,message,logStreamName
+1785179272241,INFO:     Started server process [1],app/app/2908dcca43d243a888db213b801b291e
+1785179272241,INFO:     Waiting for application startup.,app/app/2908dcca43d243a888db213b801b291e
+1785179272241,INFO:     Application startup complete.,app/app/2908dcca43d243a888db213b801b291e
+1785179272242,INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit),app/app/2908dcca43d243a888db213b801b291e
+1785179278140,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""a20ad25e1dc24e0689822b388935d6e5"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 533.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179278140,"INFO:     172.31.14.31:24860 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179308001,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""81dbbddd64134c88b6996fa50f273d83"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 471.6}",app/app/2908dcca43d243a888db213b801b291e
+1785179308002,"INFO:     172.31.14.31:51216 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179316416,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""34e1141e379144ba9a56cb0af0577653"", ""method"": ""GET"", ""path"": ""/health"", ""status"": 200, ""latency_ms"": 1.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179316416,"INFO:     172.31.14.31:58566 - ""GET /health HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179317219,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""499e87dc75c74c11b8bb58978086ab1c"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179317219,"INFO:     172.31.14.31:58578 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179317457,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""93b32330502b47c3ae6da14cbc0e4884"", ""method"": ""POST"", ""path"": ""/v1/query"", ""status"": 401, ""latency_ms"": 2.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179317458,"INFO:     172.31.14.31:58578 - ""POST /v1/query HTTP/1.1"" 401 Unauthorized",app/app/2908dcca43d243a888db213b801b291e
+1785179329304,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""e6b5a628712e4039b95b5875408492d7"", ""method"": ""POST"", ""path"": ""/v1/query"", ""status"": 200, ""latency_ms"": 11559.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179329304,"INFO:     172.31.14.31:58578 - ""POST /v1/query HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179338015,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""3e017e9130484f71ac97dc02576e23d5"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 481.7}",app/app/2908dcca43d243a888db213b801b291e
+1785179338016,"INFO:     172.31.14.31:50184 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179368016,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""fdb56e7dc060438996e95649a5672c41"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 470.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179368016,"INFO:     172.31.14.31:59080 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179398024,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""8ca7676bf42c489b8b142a98934a3a2a"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 473.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179398024,"INFO:     172.31.14.31:23688 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179407772,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""f999738b764349dea358c174d0dfdb8f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 462.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179407773,"INFO:     172.31.37.150:59366 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179419978,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""52cf6536c9fe41ed862d92e1ac08042a"", ""method"": ""GET"", ""path"": ""/health"", ""status"": 200, ""latency_ms"": 1.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179419978,"INFO:     172.31.14.31:53554 - ""GET /health HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179428041,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""5395edfb9a804ccd815a393079c2b2da"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 467.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179428041,"INFO:     172.31.14.31:35508 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179437683,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""a98092f7397b49f984ce2dd3e02a1a1e"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 480.6}",app/app/2908dcca43d243a888db213b801b291e
+1785179437683,"INFO:     172.31.37.150:63040 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179458081,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""526f7e60ebe448e5bd6286171db37796"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 476.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179458081,"INFO:     172.31.14.31:38528 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179467699,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""6165505949804650a65e5f622bc73bb9"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 471.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179467699,"INFO:     172.31.37.150:53576 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179488099,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""8c5edbecef684716b0641553cba4b256"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 468.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179488099,"INFO:     172.31.14.31:3162 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179497702,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""e6da58e50f564562aa4b9e025f1d257a"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179497702,"INFO:     172.31.37.150:2148 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179518122,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""13edce4228474b6086cfaaa4dcb0466d"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179518122,"INFO:     172.31.14.31:26582 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179527705,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""488341eb3a364c22855e655ba6ba81df"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 467.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179527705,"INFO:     172.31.37.150:20710 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179540832,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""3a59579342e648f587212729d166bd27"", ""method"": ""GET"", ""path"": ""/"", ""status"": 404, ""latency_ms"": 0.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179540832,"INFO:     172.31.37.150:43786 - ""GET / HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179541996,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""a0b8c6585b4b4fe59d5f7efc1ac87d85"", ""method"": ""GET"", ""path"": ""/favicon.ico"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179541996,"INFO:     172.31.37.150:43802 - ""GET /favicon.ico HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179548136,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""b151ab925f6c45999fc6231ed2c68230"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179548136,"INFO:     172.31.14.31:40198 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179557738,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""123fd76d7ac142c788c97ed9a6d7c3ca"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 473.8}",app/app/2908dcca43d243a888db213b801b291e
+1785179557738,"INFO:     172.31.37.150:40164 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179578165,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""82890b804832469f8685825295f423d6"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 483.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179578165,"INFO:     172.31.14.31:12670 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179587764,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""32226ca7500a4c3487541c59e44b79f4"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 469.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179587764,"INFO:     172.31.37.150:64056 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179608172,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""940bddc1625442b4b60d50d32ff37d67"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.8}",app/app/2908dcca43d243a888db213b801b291e
+1785179608172,"INFO:     172.31.14.31:46476 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179617789,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""c52160f681624638a9c760ca58af4bf7"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.7}",app/app/2908dcca43d243a888db213b801b291e
+1785179617789,"INFO:     172.31.37.150:9696 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179630314,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2227912fc51d4eeea2cd285d530466b2"", ""method"": ""GET"", ""path"": ""/"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179630314,"INFO:     172.31.14.31:6332 - ""GET / HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179631637,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""5864bd3c70214cceb071fd8892bfa929"", ""method"": ""GET"", ""path"": ""/favicon.ico"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179631637,"INFO:     172.31.37.150:34494 - ""GET /favicon.ico HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179638229,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""27bc94545add4353ad5275fbd35fdb38"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 493.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179638230,"INFO:     172.31.14.31:2756 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179647857,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""5286204f5c964dfab459322e08d40968"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 504.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179647857,"INFO:     172.31.37.150:12280 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179668222,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""83c5b424e5414defb27936541cbd06a4"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.8}",app/app/2908dcca43d243a888db213b801b291e
+1785179668222,"INFO:     172.31.14.31:54774 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179677841,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""4387a5675e1e414da1b8886a28b044f3"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179677841,"INFO:     172.31.37.150:58870 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179692968,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""c42d6e81a59c46529319fdb078141094"", ""method"": ""GET"", ""path"": ""/"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179692968,"INFO:     172.31.14.31:11534 - ""GET / HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179693205,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""3e8be66f32ee459da264a648094fe0f0"", ""method"": ""GET"", ""path"": ""/health"", ""status"": 200, ""latency_ms"": 0.7}",app/app/2908dcca43d243a888db213b801b291e
+1785179693205,"INFO:     172.31.14.31:11534 - ""GET /health HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179693922,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""f835a26a6265404bb47e69ba878ebd4d"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 472.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179693922,"INFO:     172.31.37.150:8056 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179695660,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2d311170071d4dfc9cddb6273371cfea"", ""method"": ""GET"", ""path"": ""/"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179695660,"INFO:     172.31.14.31:11542 - ""GET / HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179698255,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""d94a350d689c49658cf6de04cb50e3f8"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 469.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179698255,"INFO:     172.31.14.31:11544 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179702324,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""f764484559124ba1b3544f7a376395fd"", ""method"": ""POST"", ""path"": ""/v1/query"", ""status"": 200, ""latency_ms"": 8183.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179702325,"INFO:     172.31.37.150:8058 - ""POST /v1/query HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179707844,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""8834e1c8683345b8a880ff93d4b7c51c"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 460.9}",app/app/2908dcca43d243a888db213b801b291e
+1785179707844,"INFO:     172.31.37.150:22124 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179708173,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""b71d40f5005a4ca3a7b53a76b2d9c193"", ""method"": ""POST"", ""path"": ""/v1/query"", ""status"": 200, ""latency_ms"": 5520.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179708173,"INFO:     172.31.37.150:8058 - ""POST /v1/query HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179728277,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""a6ced13b623640fba5d51e159c3187b7"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 469.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179728278,"INFO:     172.31.14.31:48314 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179737886,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""f4e473f6fe154c2ca1e314cd51639f14"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 471.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179737886,"INFO:     172.31.37.150:6934 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179758285,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""cf8b2d1c29bc49cba8cc0f5d501cede0"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 473.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179758286,"INFO:     172.31.14.31:53932 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179767913,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""76f59435b8b945b29a7cefc22c0ee97f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 471.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179767913,"INFO:     172.31.37.150:25162 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179788297,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""7afd25d8bf06421aa449c2c9e7f0289f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 475.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179788297,"INFO:     172.31.14.31:42802 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179797947,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""f4291f48986c4fd885ce15d6b805c001"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 470.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179797948,"INFO:     172.31.37.150:51072 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179816007,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""ce474c537c70464092430c16d68e125c"", ""method"": ""GET"", ""path"": ""/health"", ""status"": 200, ""latency_ms"": 0.7}",app/app/2908dcca43d243a888db213b801b291e
+1785179816007,"INFO:     172.31.14.31:16102 - ""GET /health HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179818319,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""4f90183ee8a94ccdb664d204ccb28150"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 479.2}",app/app/2908dcca43d243a888db213b801b291e
+1785179818320,"INFO:     172.31.14.31:16106 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179827969,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""d17b1f0837644fe5962fbe42043ef256"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 467.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179827970,"INFO:     172.31.37.150:6500 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179848334,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""b175648d1d4c4af590890a072f4b065f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.7}",app/app/2908dcca43d243a888db213b801b291e
+1785179848334,"INFO:     172.31.14.31:24066 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179857997,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""6df18450430942f282c55351c9f55cf6"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179857997,"INFO:     172.31.37.150:8610 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179878354,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""4bcb1ddf33ba46a8a0a90f4ed82bd9f5"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 475.8}",app/app/2908dcca43d243a888db213b801b291e
+1785179878354,"INFO:     172.31.14.31:25562 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179888034,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""463206c8fe364b2caadbdad2b9154177"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 472.1}",app/app/2908dcca43d243a888db213b801b291e
+1785179888034,"INFO:     172.31.37.150:21758 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179908371,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2f80d0a1983a4520b4ef61e4a04d4a2d"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179908371,"INFO:     172.31.14.31:58502 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179918328,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""72d67ccaa2eb45bba3a446717add5367"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 753.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179918328,"INFO:     172.31.37.150:16100 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179938374,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""483f6fbe15e044a8885edeea1cb4a840"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 463.8}",app/app/2908dcca43d243a888db213b801b291e
+1785179938375,"INFO:     172.31.14.31:51874 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179948069,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""c766041ea72c4dfaa5f89f48bfe332a6"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179948069,"INFO:     172.31.37.150:52814 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179968411,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2bc33da12d8c4ea2b0518fd417f82fcc"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 470.5}",app/app/2908dcca43d243a888db213b801b291e
+1785179968411,"INFO:     172.31.14.31:13962 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179973250,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""22b8b96628c14907909efc10c58d06cc"", ""method"": ""GET"", ""path"": ""/"", ""status"": 404, ""latency_ms"": 0.3}",app/app/2908dcca43d243a888db213b801b291e
+1785179973250,"INFO:     172.31.14.31:50486 - ""GET / HTTP/1.1"" 404 Not Found",app/app/2908dcca43d243a888db213b801b291e
+1785179978084,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""fa01fe4ca42e4e5498638945413d9c6e"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.0}",app/app/2908dcca43d243a888db213b801b291e
+1785179978084,"INFO:     172.31.37.150:35480 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785179998433,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""56f7045b806844448ebec52c016af4a3"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.4}",app/app/2908dcca43d243a888db213b801b291e
+1785179998433,"INFO:     172.31.14.31:16072 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180008097,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""bb18855f8ec542c5962763cf89d381e2"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.7}",app/app/2908dcca43d243a888db213b801b291e
+1785180008097,"INFO:     172.31.37.150:22774 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180028478,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""40edfa1e076640c28b4c5cfb58986391"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 480.1}",app/app/2908dcca43d243a888db213b801b291e
+1785180028479,"INFO:     172.31.14.31:25760 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180038129,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""91dafb1a1ed44f658e94346613352800"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 468.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180038130,"INFO:     172.31.37.150:16538 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180058478,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""dd26ed3fa35b4c6aaaf94844ba61f545"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 468.1}",app/app/2908dcca43d243a888db213b801b291e
+1785180058478,"INFO:     172.31.14.31:23908 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180068162,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2be8946ff5c84a53962921acf9fdff15"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 472.4}",app/app/2908dcca43d243a888db213b801b291e
+1785180068162,"INFO:     172.31.37.150:17890 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180088517,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""b4322392b8ca43ff8851fe45bf1d41a4"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 477.2}",app/app/2908dcca43d243a888db213b801b291e
+1785180088517,"INFO:     172.31.14.31:56946 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180098190,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""61469298a616407abdfe418c2052fb96"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 474.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180098190,"INFO:     172.31.37.150:14190 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180118546,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""53907a3f8ac4499ca45a94dead077171"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 477.1}",app/app/2908dcca43d243a888db213b801b291e
+1785180118546,"INFO:     172.31.14.31:27534 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180128197,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""5d3fc78f487c43b482b1725dd9b4d377"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.4}",app/app/2908dcca43d243a888db213b801b291e
+1785180128197,"INFO:     172.31.37.150:6956 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180148563,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""0f2d5aa095894720be40d8db29735c4e"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.4}",app/app/2908dcca43d243a888db213b801b291e
+1785180148563,"INFO:     172.31.14.31:59494 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180158241,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""c77b8944826e41a19d3cef9e069760de"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 479.3}",app/app/2908dcca43d243a888db213b801b291e
+1785180158241,"INFO:     172.31.37.150:50024 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180178580,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""dda7a0e778914affa2347e7ef9b0e23f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 466.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180178581,"INFO:     172.31.14.31:61492 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180188258,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""e38f56a28455430fb023c620a5ea133d"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 469.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180188258,"INFO:     172.31.37.150:26700 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180208592,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""bcdbd236e8484bd7b41d33b11fde74e6"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180208592,"INFO:     172.31.14.31:48222 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180218285,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""00ecd1fb03c448a1999048c902f737ae"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 466.9}",app/app/2908dcca43d243a888db213b801b291e
+1785180218286,"INFO:     172.31.37.150:21644 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180238634,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""59c6822085514bcba83f576f7963a77f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 476.1}",app/app/2908dcca43d243a888db213b801b291e
+1785180238634,"INFO:     172.31.14.31:55680 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180248316,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""753c0c4fd9b14db09aacd67d13a5f173"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 470.9}",app/app/2908dcca43d243a888db213b801b291e
+1785180248317,"INFO:     172.31.37.150:54674 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180268663,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""8d3e2ad64fee4238975d6c2ece09e008"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 475.5}",app/app/2908dcca43d243a888db213b801b291e
+1785180268663,"INFO:     172.31.14.31:36958 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180278345,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""1c7f6afd70204a6985b248d570b8d67c"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 469.6}",app/app/2908dcca43d243a888db213b801b291e
+1785180278345,"INFO:     172.31.37.150:62018 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180298684,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""dd51e8fbdf66412087aec6b150e7a1ff"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.9}",app/app/2908dcca43d243a888db213b801b291e
+1785180298684,"INFO:     172.31.14.31:11688 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180308378,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""eeec9b418c724f3997c273b1032be327"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 485.3}",app/app/2908dcca43d243a888db213b801b291e
+1785180308378,"INFO:     172.31.37.150:60508 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180328715,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""b0b9bebe0a174c6fb8842d6cb52c03b5"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 466.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180328715,"INFO:     172.31.14.31:7034 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180338387,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""80071eaba4024998bb87964ea8bc5e15"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 467.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180338388,"INFO:     172.31.37.150:41364 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180358726,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""e10084dfd5b54b68aa682fbcd68dfb4f"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.4}",app/app/2908dcca43d243a888db213b801b291e
+1785180358727,"INFO:     172.31.14.31:30448 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180368403,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""59dc455cf43f479186fd3e6bb8076622"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.2}",app/app/2908dcca43d243a888db213b801b291e
+1785180368404,"INFO:     172.31.37.150:15594 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180388750,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""fb2850f60f564694aa0a5091345e7817"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 474.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180388750,"INFO:     172.31.14.31:1140 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180398421,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""8a4ec6a239f8466b9a649cbe8f296cbd"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 464.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180398421,"INFO:     172.31.37.150:7546 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180418767,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""23d66b9e1d1c4da6a33d9b3d291cd8e8"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 472.5}",app/app/2908dcca43d243a888db213b801b291e
+1785180418767,"INFO:     172.31.14.31:17186 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180428452,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""a026a88311a44d19b7568eb20fcec791"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.0}",app/app/2908dcca43d243a888db213b801b291e
+1785180428452,"INFO:     172.31.37.150:62700 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180448799,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""fed90f5eb58a420997ed5bcd3255121c"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 474.3}",app/app/2908dcca43d243a888db213b801b291e
+1785180448799,"INFO:     172.31.14.31:7912 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180458478,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""aef6021da6dd4cd09ee2a206f60cd549"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 465.4}",app/app/2908dcca43d243a888db213b801b291e
+1785180458478,"INFO:     172.31.37.150:46762 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180478840,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""dc82d783056e4c4f910c6ca800a9d7d2"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 487.7}",app/app/2908dcca43d243a888db213b801b291e
+1785180478841,"INFO:     172.31.14.31:63418 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180488505,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""2cfc869e3cad4614bd864a7a55fc5a1a"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 461.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180488505,"INFO:     172.31.37.150:44028 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180508854,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""e35a9e3d2b2648d899e6b2e4c0a0a736"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 471.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180508854,"INFO:     172.31.14.31:17526 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180518533,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""05658ad37c7a4efc92d9dbff6d24e053"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 460.1}",app/app/2908dcca43d243a888db213b801b291e
+1785180518533,"INFO:     172.31.37.150:15270 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e
+1785180538863,"{""level"": ""INFO"", ""logger"": ""provenance.access"", ""msg"": ""request"", ""request_id"": ""7ce7ea410156434ca914d7bb50652137"", ""method"": ""GET"", ""path"": ""/ready"", ""status"": 200, ""latency_ms"": 466.8}",app/app/2908dcca43d243a888db213b801b291e
+1785180538863,"INFO:     172.31.14.31:40544 - ""GET /ready HTTP/1.1"" 200 OK",app/app/2908dcca43d243a888db213b801b291e

@@ -68,21 +68,21 @@ The agent wins on both — the quantified proof of the thesis. Not by a landslid
 which is the honest story: on some questions the graph lacked the path and fell
 back to vector. That nuance is more credible than a suspiciously perfect number.
 
-**Latency & cost** (CloudWatch EMF, ~40 min live traffic — 146 requests, **0 errors**):
+**Latency & cost** (CloudWatch EMF, ~2h45m live traffic — **1,013 requests, 0 errors**):
 
 | Metric                | Value                                              |
 | --------------------- | -------------------------------------------------- |
-| p50 latency           | 678 ms                                             |
-| p95 latency           | 1,172 ms                                           |
-| p99 latency           | ~10.9 s                                            |
-| Avg cost / query      | ~$0.0004 (gpt-4o-mini, Langfuse cost tracking)     |
+| p50 latency           | ~825 ms (488–1,071 ms range)                       |
+| p95 latency           | ~1,193 ms                                          |
+| p99 latency           | ~1.3 s typical; cold-start spikes to 14.7 s        |
+| Avg cost / query      | ~$0.00036 (gpt-4o-mini, from Langfuse cost tracking) |
 | Infra cost            | ~$2–4 / day live; `terraform destroy` → $0         |
 
 > **Reading the latency spread:** p50–p95 are dominated by the ALB's cheap
 > `/ready` health-check pings; the real `/v1/query` agentic calls (up to 4
-> sequential LLM calls each) surface at the tail (~10–11 s). An aggregate latency
-> number is meaningless without the request mix — for a real SLO you'd emit a
-> separate metric dimension per route.
+> sequential LLM calls each) surface at the tail (~10–15 s, the cold-start
+> spikes). An aggregate latency number is meaningless without the request mix —
+> for a real SLO you'd emit a separate metric dimension per route.
 
 ### Live evidence
 
@@ -95,7 +95,7 @@ Captured from the running AWS deployment (see [`docs/screenshots/`](docs/screens
 
 <p align="center">
   <img src="docs/screenshots/cloudwatch-dashboard.png" width="760" alt="CloudWatch dashboard: p50/p95/p99 latency, request count, and errors"><br>
-  <em>CloudWatch — live latency percentiles, request count, and errors (146 requests, 0 errors).</em>
+  <em>CloudWatch — live latency percentiles, request count, and errors (1,013 requests, 0 errors over ~2h45m).</em>
 </p>
 
 <p align="center">

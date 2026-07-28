@@ -1,0 +1,11 @@
+Id,metric_alias_widget_2_0,metric_alias_widget_2_1
+StatusCode,Complete,Complete
+Messages,,
+Full label,eu-central-1:ProvenanceAgent service:api Requests Sum 300,eu-central-1:ProvenanceAgent service:api Errors Sum 300
+Label,requests,5xx errors
+2026/07/28 04:20:00,9,0
+2026/07/28 04:25:00,32,0
+2026/07/28 04:30:00,30,0
+2026/07/28 04:35:00,38,0
+2026/07/28 04:40:00,31,0
+2026/07/28 04:45:00,30,0

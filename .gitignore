@@ -40,3 +40,7 @@ crash.log
 learningv2.md
 app/eval/report.json
 github.md
+
+# Raw screenshot dumps — only the clean-named heroes are tracked
+docs/screenshots/Screenshot*.png
+docs/screenshots/demo-optimize.gif
