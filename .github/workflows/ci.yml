@@ -34,6 +34,8 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements-dev.txt
+      - name: Download spaCy model (Presidio PII backend)
+        run: python -m spacy download en_core_web_sm
       - name: Unit tests
         run: pytest -q -m "not integration"
 

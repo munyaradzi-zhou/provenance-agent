@@ -23,7 +23,7 @@ flowchart TD
 
 | Node         | Does                                                   |
 | ------------ | ------------------------------------------------------ |
-| redact       | strips emails/phones/PII before anything sees the text |
+| redact       | Presidio strips contact/financial PII before anything sees the text (see [threat_model.md](threat_model.md)) |
 | supervisor   | LLM decides graph / vector / both + logs why           |
 | graph agent  | generates Cypher, queries Neo4j, formats context       |
 | vector agent | embeds question, searches Qdrant, optional re-rank     |

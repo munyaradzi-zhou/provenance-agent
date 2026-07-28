@@ -5,13 +5,29 @@ services:
       dockerfile: docker/Dockerfile
     ports: ["8000:8000"]
     env_file: .env
-    depends_on: [neo4j, qdrant]
+    # Inside the compose network the API reaches the stores by service name, not
+    # localhost. These override the localhost defaults in .env (which are correct
+    # when you run the app on the host, e.g. for `python -m app.ingest`).
+    environment:
+      NEO4J_URI: bolt://neo4j:7687
+      QDRANT_URL: http://qdrant:6333
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
 
   neo4j:
     image: neo4j:5.15-community
     ports: ["7474:7474", "7687:7687"]
     environment:
       NEO4J_AUTH: neo4j/password
+    # Gate the API's start on Neo4j actually accepting Bolt connections.
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   qdrant:
     image: qdrant/qdrant:latest
