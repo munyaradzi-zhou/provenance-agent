@@ -1,0 +1,70 @@
+name: Deploy
+
+# Auto-deploy the app image on pushes to main that change the app or its build.
+# Auth is via GitHub OIDC -> AWS (no stored access keys). The role ARN is a repo
+# variable (not a secret — it isn't sensitive): vars.AWS_DEPLOY_ROLE_ARN.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "docker/**"
+      - "requirements.txt"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {}
+
+# OIDC needs permission to mint the identity token for this job.
+permissions:
+  id-token: write # request the GitHub OIDC JWT
+  contents: read # checkout
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  AWS_REGION: eu-central-1
+  ECR_REPOSITORY: provenance-agent
+  ECS_CLUSTER: provenance-agent
+  ECS_SERVICE: provenance-agent
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Exchange the GitHub OIDC token for short-lived AWS credentials by
+      # assuming the deploy role. No secret key material involved.
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Build once, tag with both the immutable git SHA (traceability) and
+      # :latest (what the ECS task definition references).
+      - name: Build and push image
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+        run: |
+          IMAGE="$REGISTRY/$ECR_REPOSITORY"
+          docker build -f docker/Dockerfile -t "$IMAGE:${{ github.sha }}" -t "$IMAGE:latest" .
+          docker push "$IMAGE:${{ github.sha }}"
+          docker push "$IMAGE:latest"
+
+      # The task definition points at :latest, so a forced new deployment re-pulls
+      # the image we just pushed. No new task-definition revision needed.
+      - name: Roll ECS service onto the new image
+        run: |
+          aws ecs update-service \
+            --cluster "$ECS_CLUSTER" \
+            --service "$ECS_SERVICE" \
+            --force-new-deployment >/dev/null
+          echo "Waiting for the service to reach a stable state..."
+          aws ecs wait services-stable --cluster "$ECS_CLUSTER" --services "$ECS_SERVICE"
+          echo "Deployment complete."

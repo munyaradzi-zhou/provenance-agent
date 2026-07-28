@@ -16,6 +16,12 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "github_repo" {
+  description = "owner/name of the GitHub repo allowed to assume the OIDC deploy role."
+  type        = string
+  default     = "munyaradzi-zhou/provenance-agent"
+}
+
 # --- container sizing (Fargate) ---
 variable "task_cpu" {
   description = "Fargate task vCPU units (256 = 0.25 vCPU)."

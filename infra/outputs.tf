@@ -25,3 +25,8 @@ output "dashboard_url" {
   description = "CloudWatch dashboard."
   value       = "https://${var.region}.console.aws.amazon.com/cloudwatch/home?region=${var.region}#dashboards/dashboard/${aws_cloudwatch_dashboard.app.dashboard_name}"
 }
+
+output "github_deploy_role_arn" {
+  description = "IAM role ARN that GitHub Actions assumes via OIDC (set as repo variable AWS_DEPLOY_ROLE_ARN)."
+  value       = aws_iam_role.github_deploy.arn
+}
