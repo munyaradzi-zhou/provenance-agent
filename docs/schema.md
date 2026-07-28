@@ -18,8 +18,11 @@ graph LR
 
 | Element | Label / type | Properties |
 |---------|--------------|------------|
-| Node | `:Entity` | `name` (unique), `id` (sha1 of name) |
+| Node | `:Entity` | `name` (unique) — the only property; `MERGE` sets just this |
 | Edge | `:REL` | `name` (the Wikidata relation, e.g. `director`, `mother`) |
+
+(The sha1 `id` in the ingest code is the **passage** id — the Qdrant point/payload key,
+not a graph-node property.)
 
 **Why a generic `:REL` type with a `name` property** (not a distinct type per
 relation): Cypher cannot parameterize a relationship *type* in a plain `MERGE`
