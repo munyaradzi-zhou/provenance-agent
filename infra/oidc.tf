@@ -22,9 +22,22 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 # --- who may assume the deploy role -----------------------------------------
-# Federated principal = the provider above. Two conditions:
+# Federated principal = the provider above. Conditions (all must hold):
 #  - aud must be exactly sts.amazonaws.com (blocks tokens minted for other audiences)
-#  - sub must match THIS repo on the main branch (blocks every other repo/branch/PR)
+#  - sub must match THIS repo on the main branch.
+#
+# NOTE on the sub pattern: GitHub's "immutable numeric ID" OIDC setting rewrites
+# sub to  repo:<owner>@<owner_id>/<repo>@<repo_id>:ref:refs/heads/main  (verified
+# from the live token), NOT the documented repo:owner/repo:ref:... form. We match
+# with StringLike, wildcarding only the numeric IDs, so the trust stays pinned to
+# this repo + branch and is robust to that setting. AWS requires the trust be
+# scoped on `sub` (or job_workflow_ref); we use sub because we captured its exact
+# live shape.
+locals {
+  gh_owner = split("/", var.github_repo)[0]
+  gh_repo  = split("/", var.github_repo)[1]
+}
+
 data "aws_iam_policy_document" "github_deploy_assume" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -40,7 +53,7 @@ data "aws_iam_policy_document" "github_deploy_assume" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/main"]
+      values   = ["repo:${local.gh_owner}@*/${local.gh_repo}@*:ref:refs/heads/main"]
     }
   }
 }
