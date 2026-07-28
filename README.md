@@ -84,6 +84,30 @@ back to vector. That nuance is more credible than a suspiciously perfect number.
 > number is meaningless without the request mix — for a real SLO you'd emit a
 > separate metric dimension per route.
 
+### Live evidence
+
+Captured from the running AWS deployment (see [`docs/screenshots/`](docs/screenshots/)).
+
+<p align="center">
+  <img src="docs/screenshots/langfuse-trace.png" width="760" alt="Langfuse trace: redact → supervisor → graph+vector → synthesis → grader, with per-node tokens, latency, and cost"><br>
+  <em>Langfuse — one <code>/v1/query</code> traced node-by-node (routing, dual retrieval, synthesis, grading) with per-node tokens · latency · cost.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/cloudwatch-dashboard.png" width="760" alt="CloudWatch dashboard: p50/p95/p99 latency, request count, and errors"><br>
+  <em>CloudWatch — live latency percentiles, request count, and errors (146 requests, 0 errors).</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/github-actions-deploy.png" width="760" alt="GitHub Actions deploy run: OIDC credential exchange, ECR push, and ECS roll-out all green"><br>
+  <em>GitHub Actions — the OIDC deploy pipeline green end-to-end (assume role → ECR push → ECS force-new-deployment → services-stable). No long-lived AWS keys.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/ecs-service.png" width="760" alt="ECS Fargate service healthy with one running task behind the ALB target group"><br>
+  <em>ECS Fargate — the service running one healthy task behind the ALB.</em>
+</p>
+
 ## Quickstart (local, from a clean clone)
 
 ```bash
@@ -117,7 +141,15 @@ only needed when pointing at managed/cloud services.
 
 ## Demo
 
-_(demo GIF + 3-min Loom walkthrough — see `docs/`)_
+<p align="center">
+  <img src="docs/screenshots/demo.gif" width="760" alt="ProvenanceAgent answering a compositional question live over HTTPS">
+</p>
+
+A compositional question answered live over HTTPS: the request is rejected
+without an API key, then with a key the supervisor routes to **both** graph +
+vector retrieval, synthesises a cited answer, and the grader confirms it's
+grounded — all with a visible reasoning trace. Raw transcript:
+[`docs/demo_transcript.md`](docs/demo_transcript.md). _(3-min Loom walkthrough: TBD.)_
 
 ## Tech stack
 
