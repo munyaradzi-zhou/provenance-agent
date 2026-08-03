@@ -1,52 +1,66 @@
-__pycache__/
-*.pyc
+# ─────────────────────────────────────────────────────────────
+# Secrets & credentials — NEVER commit (rotate immediately if leaked)
+# ─────────────────────────────────────────────────────────────
 .env
-.venv/
-venv/
-.pytest_cache/
-mlruns/
-mlflow.db
-langfuse/
-.dvc/cache/
-*.egg-info/
-
-# Raw corpus (large; DVC-tracked in Phase 5, not committed to git)
-# Keep data/raw/README.md; ignore the heavy artifacts only.
-data/raw/*.json
-data/raw/*.zip
-data/processed/
-learning.md
-PORTFOLIO_PLAN.md
-plan.md
-# Accidentally-committed credential/reference files (never track)
+.env.*
+!.env.example
+*_api_key.txt
 Provenance_agent_api_key.txt
+*accessKeys*.csv
+*_accessKeys.csv
+*credentials*.csv
+# Neo4j Aura / cloud-store credential download files
+Neo4j-*.txt
 cluster.md
 provenance-instance.md
-skills.md/
-*_api_key.txt
+github.md
 
-# Terraform (never commit state or real tfvars — they contain secrets)
+# Terraform — state and real tfvars contain secrets; keep the lock file
 infra/.terraform/
-# (commit .terraform.lock.hcl — it pins provider versions)
 *.tfstate
 *.tfstate.*
 infra/terraform.tfvars
 crash.log
 
-# AWS credential exports + more secret/personal files (never track)
-*accessKeys*.csv
-*_accessKeys.csv
-*credentials*.csv
-learningv2.md
-app/eval/report.json
-github.md
+# ─────────────────────────────────────────────────────────────
+# Python
+# ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
 
-# Raw screenshot dumps — only the clean-named heroes are tracked
+# ─────────────────────────────────────────────────────────────
+# Data & ML artifacts (versioned via DVC, not git)
+# ─────────────────────────────────────────────────────────────
+# Raw corpus is large + DVC-tracked; keep data/raw/README.md only.
+data/raw/*.json
+data/raw/*.zip
+data/processed/
+.dvc/cache/
+# Experiment tracking / model registry (local runs)
+mlruns/
+mlflow.db
+langfuse/
+app/eval/report.json
+
+# ─────────────────────────────────────────────────────────────
+# Docs — raw screenshot dumps (only clean-named heroes are tracked)
+# ─────────────────────────────────────────────────────────────
 docs/screenshots/Screenshot*.png
 docs/screenshots/demo-optimize.gif
 
-# Personal theory course (local study doc)
+# ─────────────────────────────────────────────────────────────
+# Personal / local-only working docs (not part of the public repo)
+# ─────────────────────────────────────────────────────────────
+learning.md
+learningv2.md
 learning_theory.md
-
-# Personal system-layout reading doc (local)
 system_layout.md
+plan.md
+PORTFOLIO_PLAN.md
+skills.md/
