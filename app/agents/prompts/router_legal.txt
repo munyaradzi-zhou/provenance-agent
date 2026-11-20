@@ -1,0 +1,6 @@
+
+Also available:
+- "legal": the question is about Dutch law (tenancy, employment, insurance), a
+  Dutch court ruling, or a legal case file (a lease, an employment contract, a
+  dismissal, an insurance claim). These are answered by LegalMind's tools; the
+  graph and vector stores hold no legal material.

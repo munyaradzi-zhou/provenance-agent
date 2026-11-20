@@ -1,8 +1,12 @@
 """The multi-agent LangGraph: supervisor routes, workers retrieve, synthesis
 answers, grader checks, and a bounded repair loop retries on ungrounded answers.
 
-    redact -> supervisor -> (graph_agent | vector_agent | both) -> synthesis
+    redact -> supervisor -> (graph_agent | vector_agent | both | legal_agent) -> synthesis
            -> grader -> {repair -> supervisor ...  |  END}
+
+legal_agent is a tool-using agent whose tools live in another system: it discovers
+LegalMind's tools over MCP and calls them (app/agents/legal.py). The route exists
+only when a LegalMind MCP endpoint is configured.
 
 Because `trace` has an `operator.add` reducer, each node returns only ITS OWN
 trace additions and LangGraph merges them -- this is what makes the parallel
@@ -16,6 +20,7 @@ from typing import Literal
 from langgraph.graph import END, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 
+from app.agents.legal import legal_enabled, run_legal_agent
 from app.agents.prompts import load_prompt
 from app.agents.schemas import GroundingVerdict, RouteDecision
 from app.agents.state import AgentState
@@ -52,6 +57,13 @@ def supervisor_node(state: AgentState) -> AgentState:
     hard-crashes the request.
     """
     if state.get("retries", 0) > 0:
+        if state.get("route") == "legal":
+            # The other stores hold no legal material; let the legal agent try again
+            return {
+                "route": "legal",
+                "route_reason": "repair retry: legal agent again",
+                "trace": ["supervisor: repair -> route=legal"],
+            }
         return {
             "route": "both",
             "route_reason": "repair retry: broadening to both stores",
@@ -61,11 +73,20 @@ def supervisor_node(state: AgentState) -> AgentState:
     q = state["redacted_question"]
     try:
         llm = get_llm().with_structured_output(RouteDecision)
-        decision: RouteDecision = llm.invoke(_fill(load_prompt("router"), question=q))  # type: ignore[assignment]
+        prompt = load_prompt("router")
+        if legal_enabled():
+            # The legal option goes with the other options, before the question
+            prompt = prompt.replace(
+                "Question: {question}", load_prompt("router_legal") + "\nQuestion: {question}"
+            )
+        decision: RouteDecision = llm.invoke(_fill(prompt, question=q))  # type: ignore[assignment]
+        chosen = decision.route
+        if chosen == "legal" and not legal_enabled():
+            chosen = "both"
         return {
-            "route": decision.route,
+            "route": chosen,
             "route_reason": decision.reason,
-            "trace": [f"supervisor: route={decision.route} ({decision.reason})"],
+            "trace": [f"supervisor: route={chosen} ({decision.reason})"],
         }
     except Exception as e:  # noqa: BLE001
         route: Literal["graph", "vector", "both"] = "both" if "?" in q else "vector"
@@ -94,13 +115,33 @@ def vector_agent_node(state: AgentState) -> AgentState:
         return {"vector_context": "", "trace": [f"vector agent error: {type(e).__name__}"]}
 
 
+def legal_agent_node(state: AgentState) -> AgentState:
+    """Gather evidence with LegalMind's MCP tools; degrade to empty context on failure."""
+    try:
+        result = run_legal_agent(state["redacted_question"])
+    except Exception as e:  # noqa: BLE001
+        return {
+            "legal_context": "",
+            "tool_calls": [],
+            "trace": [f"legal agent error: {type(e).__name__}"],
+        }
+    return {"legal_context": result.context, "tool_calls": result.tool_calls, "trace": result.trace}
+
+
 def synthesis_node(state: AgentState) -> AgentState:
     """LLM answer over retrieved context only, with inline [title] citations."""
     q = state["redacted_question"]
     gc = state.get("graph_context") or "(none)"
     vc = state.get("vector_context") or "(none)"
+    lc = state.get("legal_context") or "(none)"
     try:
-        prompt = _fill(load_prompt("synthesis"), question=q, graph_context=gc, vector_context=vc)
+        prompt = _fill(
+            load_prompt("synthesis"),
+            question=q,
+            graph_context=gc,
+            vector_context=vc,
+            legal_context=lc,
+        )
         answer = str(get_llm().invoke(prompt).content).strip()
     except Exception as e:  # noqa: BLE001
         return {"answer": "", "citations": [], "trace": [f"synthesis error: {type(e).__name__}"]}
@@ -123,8 +164,12 @@ def grader_node(state: AgentState) -> AgentState:
             "trace": ["grader: ungrounded (empty)"],
         }
 
-    context = (
-        (state.get("graph_context") or "") + "\n" + (state.get("vector_context") or "")
+    context = "\n".join(
+        (
+            state.get("graph_context") or "",
+            state.get("vector_context") or "",
+            state.get("legal_context") or "",
+        )
     ).strip()
     try:
         llm = get_llm().with_structured_output(GroundingVerdict)
@@ -158,6 +203,8 @@ def repair_node(state: AgentState) -> AgentState:
 def _route(state: AgentState) -> list[str]:
     """Conditional edge: fan out to the agents the supervisor selected."""
     route = state["route"]
+    if route == "legal":
+        return ["legal_agent"]
     if route == "graph":
         return ["graph_agent"]
     if route == "vector":
@@ -180,6 +227,7 @@ def build_graph() -> CompiledStateGraph:
     g.add_node("supervisor", supervisor_node)
     g.add_node("graph_agent", graph_agent_node)
     g.add_node("vector_agent", vector_agent_node)
+    g.add_node("legal_agent", legal_agent_node)
     g.add_node("synthesis", synthesis_node)
     g.add_node("grader", grader_node)
     g.add_node("repair", repair_node)
@@ -187,9 +235,16 @@ def build_graph() -> CompiledStateGraph:
     g.set_entry_point("redact")
     g.add_edge("redact", "supervisor")
     g.add_conditional_edges(
-        "supervisor", _route, {"graph_agent": "graph_agent", "vector_agent": "vector_agent"}
+        "supervisor",
+        _route,
+        {
+            "graph_agent": "graph_agent",
+            "vector_agent": "vector_agent",
+            "legal_agent": "legal_agent",
+        },
     )
     g.add_edge("graph_agent", "synthesis")
+    g.add_edge("legal_agent", "synthesis")
     g.add_edge("vector_agent", "synthesis")
     g.add_edge("synthesis", "grader")
     g.add_conditional_edges("grader", _after_grader, {"repair": "repair", "end": END})

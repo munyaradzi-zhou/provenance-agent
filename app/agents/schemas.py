@@ -13,8 +13,11 @@ from pydantic import BaseModel, Field
 class RouteDecision(BaseModel):
     """Supervisor's choice of retrieval strategy."""
 
-    route: Literal["graph", "vector", "both"] = Field(
-        description="graph = multi-hop/relational; vector = semantic/single-fact; both = unsure or needs each"
+    route: Literal["graph", "vector", "both", "legal"] = Field(
+        description=(
+            "graph = multi-hop/relational; vector = semantic/single-fact; both = unsure or needs each; "
+            "legal = Dutch law, court rulings or a legal case file (LegalMind tools over MCP)"
+        )
     )
     reason: str = Field(description="one short sentence justifying the choice")
 

@@ -15,4 +15,7 @@ Question: {question}
 --- VECTOR CONTEXT (passages) ---
 {vector_context}
 
+--- LEGAL CONTEXT (from LegalMind's tools; cite its sources by their bracketed label) ---
+{legal_context}
+
 Answer:

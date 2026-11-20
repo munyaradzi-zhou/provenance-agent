@@ -12,10 +12,12 @@ from typing import Annotated, Literal, TypedDict
 class AgentState(TypedDict, total=False):
     question: str  # the user's raw question
     redacted_question: str  # after PII redaction
-    route: Literal["graph", "vector", "both"]  # supervisor decision
+    route: Literal["graph", "vector", "both", "legal"]  # supervisor decision
     route_reason: str  # why the supervisor chose that route
     graph_context: str  # retrieved via Cypher
     vector_context: str  # retrieved via semantic search
+    legal_context: str  # gathered with LegalMind's tools over MCP
+    tool_calls: list[dict]  # MCP tool calls made by the legal agent
     answer: str  # synthesised final answer
     citations: list[str]  # source titles cited in the answer
     grounded: bool | None  # grader verdict: is the answer supported by context?
