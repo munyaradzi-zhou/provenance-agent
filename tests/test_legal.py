@@ -153,3 +153,21 @@ def _async(value):
 
 def test_helpers_run():  # keep the coroutine helper honest
     assert asyncio.run(_coro(1)) == 1
+
+
+def test_azure_openai_provider_uses_entra_id(monkeypatch):
+    import app.core.llm as llm_module
+    from langchain_openai import AzureChatOpenAI
+
+    s = get_settings()
+    monkeypatch.setattr(s, "llm_provider", "azure_openai")
+    monkeypatch.setattr(s, "azure_openai_endpoint", "https://oai.example.openai.azure.com/")
+    monkeypatch.setattr(s, "azure_openai_deployment", "gpt-4.1-mini")
+    llm_module.get_llm.cache_clear()
+    try:
+        llm = llm_module.get_llm()
+        assert isinstance(llm, AzureChatOpenAI)
+        assert llm.deployment_name == "gpt-4.1-mini"
+        assert llm.openai_api_key is None  # a token provider, no key
+    finally:
+        llm_module.get_llm.cache_clear()

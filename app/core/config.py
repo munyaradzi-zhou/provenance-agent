@@ -8,7 +8,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     openai_api_key: str = ""
+    llm_provider: str = "openai"  # "openai" | "azure_openai" (Entra ID, no key)
     llm_model: str = "gpt-4o-mini"
+    azure_openai_endpoint: str = ""
+    azure_openai_deployment: str = ""
+    azure_openai_api_version: str = "2024-10-21"
 
     # Embeddings: high-volume, so a small/cheap model. Kept on the same provider
     # as the LLM for one key; dim must match the collection's vector size.
