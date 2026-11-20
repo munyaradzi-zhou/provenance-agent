@@ -8,7 +8,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     openai_api_key: str = ""
+    llm_provider: str = "openai"  # "openai" | "azure_openai" (Entra ID, no key)
     llm_model: str = "gpt-4o-mini"
+    azure_openai_endpoint: str = ""
+    azure_openai_deployment: str = ""
+    azure_openai_api_version: str = "2024-10-21"
 
     # Embeddings: high-volume, so a small/cheap model. Kept on the same provider
     # as the LLM for one key; dim must match the collection's vector size.
@@ -32,6 +36,12 @@ class Settings(BaseSettings):
 
     # Agent orchestration
     max_retries: int = 1  # repair-loop cap: how many times to re-retrieve if ungrounded
+
+    # LegalMind over MCP (a separate system on Azure): Dutch legislation, rulings and case files.
+    # The "legal" route exists only when both are set.
+    legalmind_mcp_url: str = ""  # e.g. https://ca-legalmind-mcp-dev.<env>.azurecontainerapps.io/mcp
+    legalmind_mcp_api_key: str = ""
+    legal_max_tool_calls: int = 3  # tool-call budget per question
 
     # Observability
     emf_metrics: bool = False  # emit CloudWatch EMF metric logs (on in ECS, off locally)
